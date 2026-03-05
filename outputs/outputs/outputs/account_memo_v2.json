@@ -1,0 +1,37 @@
+{
+  "account_id": "demo_001",
+  "company_name": "Demo Customer",
+  "business_hours": {
+    "days": "Monday-Friday",
+    "start": "09:00",
+    "end": "17:00",
+    "timezone": "America/New_York"
+  },
+  "office_address": "unknown",
+  "services_supported": [
+    "appointment booking"
+  ],
+  "emergency_definition": [
+    "urgent service request",
+    "system failure"
+  ],
+  "emergency_routing_rules": {
+    "primary_contact": "on-call technician",
+    "fallback": "dispatch team"
+  },
+  "non_emergency_routing_rules": {
+    "action": "collect caller information and schedule appointment"
+  },
+  "call_transfer_rules": {
+    "timeout_seconds": 60,
+    "retries": 1,
+    "fallback_message": "If transfer fails, inform the caller that dispatch will follow up."
+  },
+  "integration_constraints": [
+    "Google Calendar integration required"
+  ],
+  "after_hours_flow_summary": "Collect caller details and confirm follow-up during business hours unless emergency.",
+  "office_hours_flow_summary": "Attempt transfer to technician or schedule appointment.",
+  "questions_or_unknowns": [],
+  "notes": "Updated based on onboarding information."
+}
