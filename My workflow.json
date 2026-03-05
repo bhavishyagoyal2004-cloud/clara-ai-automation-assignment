@@ -1,0 +1,214 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8b160d12-f9f3-4db2-acd5-141bbb24cc14",
+              "name": "transcript",
+              "value": "Customer wants an AI phone agent to book appointments. Needs Google Calendar integration and friendly voice responses.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        224,
+        0
+      ],
+      "id": "a2ca9dbf-5e64-4b5d-a65c-1f3cca4fcf3e",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "llama3.2",
+          "mode": "id"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=You are an AI system that converts demo call transcripts into Retell AI agent configuration.\n\nTranscript:\n{{$json[\"transcript\"]}}\n\nReturn JSON with the following fields:\n\nagent_name\npurpose\ntools\nintegrations\npersonality"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.ollama",
+      "typeVersion": 1,
+      "position": [
+        432,
+        0
+      ],
+      "id": "23d68eb6-2ed9-4e2e-b3ce-83b2f56bf432",
+      "name": "Message a model",
+      "credentials": {
+        "ollamaApi": {
+          "id": "sxG5mjO4vyOmphDJ",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7692a49a-380f-41bc-b934-b64003e70233",
+              "name": "onboarding_notes",
+              "value": "Customer wants the agent to also support WhatsApp booking and respond in a casual tone.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        687.9486781466837,
+        0
+      ],
+      "id": "08298de5-abfc-49bb-b548-81e3268c107c",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "llama3.2",
+          "mode": "id"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=You previously generated this AI agent configuration:\n\n{{$json}}\n\nNow update the configuration based on the onboarding notes.\n\nOnboarding notes:\n{{$json[\"onboarding_notes\"]}}\n\nReturn the updated JSON configuration."
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.ollama",
+      "typeVersion": 1,
+      "position": [
+        896,
+        0
+      ],
+      "id": "93108084-efab-41d7-93cd-d1517b0635c3",
+      "name": "Message a model1",
+      "credentials": {
+        "ollamaApi": {
+          "id": "sxG5mjO4vyOmphDJ",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "demo-call",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -32,
+        0
+      ],
+      "id": "73af4c78-e03c-4351-89ff-3561521db747",
+      "name": "Webhook",
+      "webhookId": "4ca819f4-a45d-4975-b2b5-7b96a64d90a6"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        1248,
+        0
+      ],
+      "id": "6ab937c8-f6a8-497a-b425-74656eeccf15",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Message a model1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "40d98c60-4fe6-4806-affe-3df58b8c95ca",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "aa9b3239f1e47a93810b3321374e24cfb26d7d3533a256df7452132988a425cf"
+  },
+  "id": "IacIRFt8Cm6n7veA",
+  "tags": []
+}
