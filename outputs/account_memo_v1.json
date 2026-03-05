@@ -1,0 +1,35 @@
+{
+  "account_id": "demo_001",
+  "company_name": "Unknown Demo Client",
+  "business_hours": {
+    "days": "unknown",
+    "start": "unknown",
+    "end": "unknown",
+    "timezone": "unknown"
+  },
+  "office_address": null,
+  "services_supported": [
+    "appointment booking"
+  ],
+  "emergency_definition": [],
+  "emergency_routing_rules": {},
+  "non_emergency_routing_rules": {
+    "action": "collect details and schedule appointment"
+  },
+  "call_transfer_rules": {
+    "timeout_seconds": 60,
+    "retries": 1,
+    "fallback_message": "Sorry, I couldn't connect you right now. Our team will follow up shortly."
+  },
+  "integration_constraints": [
+    "Google Calendar integration required"
+  ],
+  "after_hours_flow_summary": "Collect customer information and schedule follow-up.",
+  "office_hours_flow_summary": "Attempt to transfer or schedule appointment.",
+  "questions_or_unknowns": [
+    "Exact business hours",
+    "Emergency definitions",
+    "Routing contacts"
+  ],
+  "notes": "Generated from demo call transcript."
+}
